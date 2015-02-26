@@ -43,6 +43,6 @@
 
 - name: Replaces nginx default server conf for php5-fpm
   action: template src="../templates/default-fpm.j2" dest=/etc/nginx/sites-available/default
-  when: nginx_add_default and just_installed|changed
+  when: php5_add_nginx_default
   notify:
     - Restart nginx
