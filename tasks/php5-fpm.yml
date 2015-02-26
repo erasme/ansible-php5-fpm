@@ -40,3 +40,9 @@
   shell: pear install {{ item }}
   with_items: pear.packages
   when: pear is defined
+
+- name: Replaces nginx default server conf for php5-fpm
+  action: template src="../templates/default-fpm.j2" dest=/etc/nginx/sites-available/default
+  when: nginx_add_default and just_installed|changed
+  notify:
+    - Restart nginx
