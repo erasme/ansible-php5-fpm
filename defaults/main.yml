@@ -1,0 +1,2 @@
+php5_post_max_size: 40M
+php5_upload_max_filesize: 20M

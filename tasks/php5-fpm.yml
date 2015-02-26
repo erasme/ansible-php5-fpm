@@ -1,0 +1,42 @@
+- debug: var=php5-fpm
+
+- name: Installs php5-fpm
+  apt: pkg={{ item }} state=latest
+  notify:
+    - Restart nginx
+  with_items:
+    - php5-fpm
+    - php-apc
+    - php5-mcrypt
+    - php5-gd
+    - php5-curl
+    - php-pear
+    - php5-mysql
+
+- name: Adds php.ini
+  template: src="../templates/php.ini.j2" dest=/etc/php5/fpm/php.ini
+  notify:
+    - Restart php5-fpm
+    - Restart nginx
+
+- name: Adds pool config
+  template: src="../templates/pool.j2" dest=/etc/php5/fpm/pool.d/www.conf
+  notify:
+    - Restart php5-fpm
+    - Restart nginx
+
+- name: Adds nginx buffer tuning
+  template: src="../templates/fastcgi_buffers.conf.j2" dest=/etc/nginx/conf.d/fastcgi_buffers.conf
+  notify:
+    - Restart php5-fpm
+    - Restart nginx
+
+- name: Adds pear channels
+  shell: pear channel-discover {{ item }}
+  with_items: pear.channels
+  when: pear is defined
+
+- name: Adds pear packages
+  shell: pear install {{ item }}
+  with_items: pear.packages
+  when: pear is defined
