@@ -27,6 +27,8 @@ Role Variables
 
   - `php5_post_max_size`: max post size (default: 40M)
   - `php5_upload_max_filesize`: max upload size for files (default: 20M)
+  - `php5_add_nginx_default`: whether the role will add a default & php5-fpm-enabled virtuahost in nginx config
+
 
 Tags
 ----
