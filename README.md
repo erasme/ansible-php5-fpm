@@ -50,10 +50,10 @@ This is mainly used as a dependency in your existing playbooks, like:
 
 but can be used in playbooks also :
 
-  - name: web servers
-    hosts: webservers
-    roles:
-      - php5-fpm
+    - name: web servers
+      hosts: webservers
+      roles:
+        - php5-fpm
 
 License
 -------
