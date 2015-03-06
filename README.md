@@ -53,7 +53,7 @@ but can be used in playbooks also :
     - name: web servers
       hosts: webservers
       roles:
-        - php5-fpm
+        - erasme.php5-fpm
 
 License
 -------
