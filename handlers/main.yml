@@ -1,5 +1,19 @@
 - name:  Restart php5-fpm
-  service: name=php5-fpm state=restarted
+  debug: msg="Fan out to multiple handlers"
+  changed_when: true
+  notify:
+    - Restart php5-fpm 14.04
+    - Restart php5-fpm default
+
+- name:  Restart php5-fpm 14.04
+  command: service php5-fpm restart
+  when: ansible_distribution_version == '14.04' 
+  register: _php5_fpm_1404
   notify:
     - Restart nginx
 
+- name:  Restart php5-fpm default
+  service: name=php5-fpm state=restarted
+  when: _php5_fpm_1404|skipped
+  notify:
+    - Restart nginx
